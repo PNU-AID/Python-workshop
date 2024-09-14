@@ -1,5 +1,6 @@
 # 파이썬 자료구조
 ## variable
+![](https://wikidocs.net/images/page/18/02_8_memory.png)
 변수가 어떻게 생성이 되느냐?
 파이썬에서 변수는 c랑 조금 다르다. c는 생성하고 그 주소를 할당하는데 파이썬 같은 경우에는 무조건 레퍼런스를 할당한다. 
 
@@ -26,7 +27,8 @@ b+=1
 ### mutable & immutable
 mutable은 값이 변한다는 뜻이고, immutable은 값이 변하지 않는다는 의미이다. 자료형마다 특징이 다르다
 
-immutable한 자료형들은 한번 생성된 값은 변경할 수 없으며, 값을 변경하려면 새로운 메모리 공간이 필요하다
+> immutable한 자료형들은 한번 생성된 값은 변경할 수 없으며, 값을 변경하려면 새로운 메모리 공간이 필요하다
+
 - 숫자형 (number) : immutable
 ![](https://velog.velcdn.com/images/soheean1370/post/4eb51064-72eb-4ca0-b1af-4a7eaa68c2ea/image.png)
 - 문자열 (string) : immutable
@@ -40,7 +42,8 @@ print(a)
 - 튜플(Tuple) : immutable
 ![](https://velog.velcdn.com/images/soheean1370/post/7f536eed-7985-422c-9987-ed14f1499b5e/image.png)
 
-mutable한 자료형들은 값을 변경할 수 있으며, 동일한 메모리 주소에서 값을 수정하는 방식
+> mutable한 자료형들은 값을 변경할 수 있으며, 동일한 메모리 주소에서 값을 수정하는 방식
+
 - 리스트 (list) : mutable
 ![](https://velog.velcdn.com/images/soheean1370/post/a3464987-41e6-4284-8f03-ccac6859efea/image.png)
 - 딕셔너리 (Dictionary) : mutable 
@@ -59,7 +62,7 @@ b = False
 ```python
 a = 1
 b = 1
-print(a == b) // == 은 두 수가 같은가를 묻는 조건문
+print(a == b) # == 은 두 수가 같은가를 묻는 조건문
 >>> True
 ```
 ## list, array
@@ -120,6 +123,11 @@ print(a[0])
 
 ![](https://wikidocs.net/images/page/16/02_5_baseball.png)
 
+딕셔너리의 기본 모습
+```python
+dic = {Key1: Value1, Key2: Value2, Key3: Value3, ...}
+```
+
 ```python
 a = {'name': 'John','age':25}
 print(a['name])
@@ -130,6 +138,19 @@ print(a['name])
 a['age'] = 26
 print(a['age'])
 >>> 26
+```
+딕셔너리 쌍 추가하기
+```python
+a = {1:'a'}
+a[2] = 'b' 
+print(a)
+>>> {1: 'a', 2: 'b'}
+```
+딕셔너리 요소 삭제하기
+```python
+del a[1] 
+print(a)
+>>> {2: 'b'}
 ```
 
 ## set
@@ -147,32 +168,3 @@ print(a,b)
 ```
 중복되는게 없다. 무조건 유일한 하나의 오브젝트들만 들어가 있다. 포문을 돌릴 수 있는 객체이다.     
 변경 불가능한 객체이고 해싱이 가능하다.
-
-
-# 제어문  
-
-
-
-# 입출력
-
-
-
-## Function
-파이썬에서 함수는 코드 재사용을 위한 기본적인 방법이다. `def` 키워드를 사용해서 함수를 정의하며, 함수는 입력값을 받고 결과값을 반환할 수 있다.
-
-```python
-def add(a,b):
-    return a + b
-
-result = add(3,4)
-print(result)
->>> 7
-```
-### Type Hint
-타입 힌트는 함수 매개변수와 반환값의 타입을 명시적으로 표시하는 방법이다. 이를 통해 코드 가독성을 높이고, 타입 관련 오류를 줄일 수 있다! 파이썬에서는 타입 힌트를 강제하지 않는다
-
-```python
-def add(a: int, b: int) -> int:
-    return a + b
-```
-위 함수에서 a 와 b는 정수형 int 이어야 하며, 함수의 반환값 또한 정수형 int임을 나타낸다. 타입 힌트를 사용함으로써 함수의 사용법을 명확하게 알 수 있으며, type 관련 버그를 미리 방지할 수 있다.
