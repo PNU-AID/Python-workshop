@@ -1,6 +1,16 @@
 # 파이썬 자료구조
+- [variable](#variable)
+- [bool](#bool)
+- [list,array](#list-array)
+- [string](#string)
+- [tupe](#tuple)
+- [dictonary](#dictionary)
+- [set](#set)
+
 ## variable
 ![](https://wikidocs.net/images/page/18/02_8_memory.png)
+
+
 변수가 어떻게 생성이 되느냐?
 파이썬에서 변수는 c랑 조금 다르다. c는 생성하고 그 주소를 할당하는데 파이썬 같은 경우에는 무조건 레퍼런스를 할당한다. 
 
