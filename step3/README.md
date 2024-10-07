@@ -319,6 +319,38 @@ def add(a: int, b: int) -> int:
 mypy script.py
 ```
 
+### TypedDict
+TypedDict는 딕셔너리의 키와 값에 대한 타입 정보를 명시하는 데 사용된다. 데이터 구조가 복잡할 때 유용하며, 코드 가독성을 높이는 데 도움이 된다.
+
+```python
+from typing import TypedDict
+
+class Movie(TypedDict):
+    title: str
+    year: int
+
+movie: Movie = {
+    'title': 'Inception',
+    'year': 2010
+}
+```
+### NamedTuple
+NamedTuple은 튜플을 더 읽기 쉽게 사용할 수 있도록 하는 방법이다. 속성명을 지정해 가독성을 높이고, 변경 불가능한 데이터 구조를 간결하게 표현할 때 유용하다.
+
+```python
+from typing import NamedTuple
+
+class Point(NamedTuple):
+    x: int
+    y: int
+
+p = Point(10, 20)
+print(p.x, p.y)
+
+>>>10 20
+```
+TypedDict와 NamedTuple은 복잡한 데이터 구조를 다루면서도 가독성과 유지보수성을 높이는 데 중요한 도구다.
+
 ### Lambda 함수
 lambda는 간단한 한 줄로 정의할때 사용하는 예약어로, `def`와 동일한 역할을 한다. 특히, 복잡하지 않은 연산이나 짧은 구문을 처리할때 유용하다. 보통 익명함수 (이름이 없는 함수)를 정의할때 사용되며, 우리말로는 '람다'라고 읽는다.
 
@@ -363,3 +395,70 @@ print(a)
 ```
 input은 사용자가 키보드로 입력한 모든 것을 문자열로 저장한다. 숫자로 입력을 해도 input은 입력되는 모든 것을 문자열로 취급하기 때문에 숫자가 아닌 문자열로 나온다.
 
+### format() 메서드
+format() 메서드는 문자열 내에 값을 삽입하기 위한 강력한 포맷팅 도구이다. 중괄호 {}를 사용하여 문자열 내에서 변수나 값을 삽입할 수 있으며, 중괄호 안에 인덱스나 변수명을 사용해 구체적으로 어떤 값을 출력할지 지정할 수 있다.
+
+```python
+name = "Bob"
+age = 30
+print("My name is {} and I am {} years old.".format(name, age))
+```
+format() 메서드는 문자열을 형식화하는 데 유용하며, 특히 숫자를 다룰 때 유용하다. 아래는 숫자를 형식화할 때 사용하는 방법이다.
+```python
+"{:형식_spec}".format(value)
+```
+여기서 형식_spec은 여러 옵션을 포함할 수 있다:
+- .Nf: 숫자를 소수점 이하 N 자리까지 반올림합니다.
+- ,: 천 단위 구분 기호로 쉼표를 추가합니다.
+- +, -, 0과 같은 다른 기호는 부호 처리 또는 0 패딩에 사용됩니다.
+
+1. 소수점 두 자리로 반올림:
+
+```python
+number = 123.45678
+formatted = "{:.2f}".format(number)
+print(formatted)  
+>>> 123.46
+```
+- 여기서 .2f는 숫자가 소수점 이하 2자리로 반올림된다는 의미
+
+2. 천 단위 구분 기호 추가:
+```python
+number = 1234567.89
+formatted = "{:,}".format(number)
+print(formatted)  
+>>> 1,234,567.89
+```
+- ,를 사용하여 천 단위마다 쉼표가 추가
+
+3. 소수점 자리수와 천 단위 구분 기호 함께 사용:
+```python
+number = 1234567.891
+formatted = "{:,.2f}".format(number)
+print(formatted)  
+>>> 1,234,567.89
+```
+- :,와 .2f를 함께 사용하면, 소수점 두 자리로 반올림하면서도 천 단위 구분 기호를 추가할 수 있다.
+
+### fstring
+f-string은 파이썬에서 문자열을 형식화하는 가장 간단하고 직관적인 방법이다. 파이썬 3.6 이후부터 지원되며, 중괄호 {} 안에 변수를 넣어 문자열을 간편하게 출력할 수 있다
+
+```python
+name = "Alice"
+age = 25
+print(f"My name is {name} and I am {age} years old.")
+
+>>> My name is Alice and I am 25 years old.
+```
+
+위 코드에서는 name과 age 변수를 중괄호 {}로 감싸서 문자열 내에서 쉽게 변수를 출력할 수 있다. 이는 format() 메서드보다 간결하고 직관적인 방식이다.
+
+f-string은 표현식도 지원한다. 중괄호 안에서 간단한 연산이나 함수 호출을 할 수 있다.
+
+```python
+a = 5
+b = 10
+print(f"The sum of {a} and {b} is {a + b}.")
+
+>>> The sum of 5 and 10 is 15.
+```
