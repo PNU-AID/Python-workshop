@@ -1,15 +1,6 @@
-class MyClass:
-    count = 0
-
+class Person:
     def __init__(self):
-        MyClass.count += 1
+        self.__age = 20
 
-    def get_count(self):
-        return MyClass.count
-    
-a = MyClass()
-b = MyClass()
-c = MyClass()
-
-print(a.get_count())
-print(MyClass.count)
+p = Person()
+print(dir(p))

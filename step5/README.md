@@ -97,7 +97,7 @@ print(MyClass.count)
 ```
 
 # 매직 메서드 (Magic Method)
-클래스의 안에 정의된 함수를 메소드(method)라고 부른다. 메소드 중에서 `__`로 시작해서 `__`로 끝나는 메소드들이 있는데 이를 매직 메소드 또는 특별 메소드라고 부르ㄴ다. 가장 유명한 매직 메소드에는 `__init__`이라는 생성자가 있다. 생성자는 어떤 클래스의 객체가 생성될 때 파이썬 인터프리터에 의해 자동으로 호출되는 메소드였다.
+클래스의 안에 정의된 함수를 메소드(method)라고 부른다. 메소드 중에서 `__`로 시작해서 `__`로 끝나는 메소드들이 있는데 이를 매직 메소드 또는 특별 메소드라고 부른다. 가장 유명한 매직 메소드에는 `__init__`이라는 생성자가 있다. 생성자는 어떤 클래스의 객체가 생성될 때 파이썬 인터프리터에 의해 자동으로 호출되는 메소드였다.
 
 ```python
 class Car:
@@ -108,8 +108,207 @@ a = Car()
 >>> 자동차 제작 완료
 ```
 
-> 매직 메소드를 사용할까?
+> 언제 매직 메소드를 사용할까?
+여러분이 만든 클래스 타입에 대해 인덱싱 기능을 제공하려고 할때와 연산자를 수행할때 어떤 정해진 동작이 수행되도록 하려고 할 때에도 매직 메소드를 사용한다
 
+데이터셋 만들때 사용되는 대표적인 매직 메소드 
+- __len__(self): 컨테이너 내 항목의 수를 반환한다. len()함수에 의해 호출된다
+- __getitem__(self,key): 주어진 키에 해당하는 항목을 컨테이너에서 가져온다. ob[key]형식 (인덱싱)으로 접근 시 사용된다
 
 # 상속
+
+마치 부모가 자식에게 상속해주듯이 클래스도 상속을 할 수 있다. 상속을 해주는 클래스가 부모클래스가 되고 상속을 받는 클래스가 자식클래스가 된다. 공통되는 부분의 코드를 중복으로 적지 않기 위해서 클래스를 재활용하는 개념이라고 보면 된다. 자식클래스는 부모클래스로부터 모든 속성과 메소드를 상속받을 수 있다. 다중상속은 여러 부모클래스로부터 속성과 메소드를 상속받는 것을 말한다.
+
+```python
+class 기반클래스_이름:
+    코드
+class 클래스_이름(기반클래스_이름):
+    코드
+```
+### 포함 관계
+포함 관계는 상속과는 다르게, 특정 클래스가 다른 클래스의 인스턴스를 속성으로 갖는 것을 의미한다
+
+```python
+class Person:
+    def greeting(self):
+        print("안녕하세요.")
+
+class PersonList:
+    def __init__(self):
+        self.person_list = [] # 리스트 속성에 Person 인스턴스를 넣어서 관리
+
+    def append_person(self, person):
+        self.person_list.append(person)
+```
+
+위 코드에서 `PersonList` 클래스가 `Person` 인스턴스를 속성으로 포함하고 있다. 이는 "사람 목록(PersonList)이 사람(Person)을 가지고 있다"는 의미로, has-a 관계라고 한다.
+
+### 기반 클래스의 속성 사용하기
+상속을 받은 자식 클래스가 부모 클래스의 속성을 사용하려면 부모 클래스의 `__init__`메소드를 호출해야한다
+
+```python
+class Person():
+    def __init__(self):
+        print('Person __init__')
+        self.hello = '안녕하세요.'
+
+class Student(Person):
+    def __init__(self):
+        print('Student __init__')
+        self.school = '파이썬 코딩 도장'
+
+james = Student()
+print(james.school)
+print(james.hello)
+
+>>>
+파이썬 코딩 도장
+AttributeError: 'Student' object has no attribute 'hello'
+```
+기반 클래스 Person의 __init__ 메서드가 호출되지 않았기 때문이다.
+즉, Person의 __init__ 메서드가 호출되지 않으면 self.hello = '안녕하세요.'도 실행되지 않아서 속성이 만들어지지 않는다.
+
+이걸 해결할 수 있는게 super()이다
+
+### super()로 기반 클래스 초기화하기
+```python
+class Person:
+    def __init__(self):
+        print('Person __init__')
+        self.hello = '안녕하세요.'
+
+class Student(Person):
+    def __init__(self):
+        print('Student __init__')
+        super().__init__() # 부모 클래스의 __init__ 메소드 호출
+        self.school = '파이싼 코딩 도장'
+
+james = Student()
+print(james.school)
+print(james.hello)
+
+>>>
+파이썬 코딩 도장
+안녕하세요.
+```
+
+super().__init__()와 같이 기반 클래스 Person의 __init__ 메서드를 호출해주면 기반 클래스가 초기화되어서 속성이 만들어진다.
+
+### 기반 클래스를 초기화하지 않아도 되는 경우
+만약 자식 클래스에서 __init__ 메소드를 정의하지 않으면, 부모 클래스의 __init__ 메소드가 자동으로 호출된다
+
+```python
+class Person:
+    def __init__(self):
+        print('Persone __init__')
+        self.hello = '안녕하세요.'
+
+class Student(Person):
+    pass
+
+james = Student()
+print(james.hello)
+
+>>> 안녕하세요.
+```
+
+### 오버라이딩(overriding)
+오버라이딩은 자식 클래스가 부모 클래스의 메소드를 재정의하는 것을 의미한다
+
+```python
+class Person:
+    def greeting(self):
+        print('안녕하세요.')
+
+class Studnet(Person):
+    def greeting(self):
+        print('안녕하세요. 저는 파이썬 코딩 도장 학생입니다.')
+    
+james = Student()
+james.greeting()
+
+>>> 안녕하세요. 저는 파이썬 코딩 도장 학생입니다.
+```
+또한 오버라이딩된 메소드에서 super()로 부모 클래스의 메소드를 호출할 수도 있다.
+
+```python
+class Person:
+    def greeting(self):
+        print('안녕하세요.')
+
+class Student(Person):
+    def greeting(self):
+        super().greeting() # 부모 클래스의 메소드 호출
+        print('저는 파이썬 코딩 도장 학생입니다.')
+
+james = Student()
+james.greeting()
+
+>>>
+안녕하세요.
+저는 파이썬 코딩 도장 학생입니다.
+```
 ## 다중상속
+
+다중 상속은 여러 기반 클래스로부터 상속을 받아서 파생 클래스를 만드는 방법이다. 다음과 같이 클래스를 만들 때 ( )(괄호) 안에 클래스 이름을 ,(콤마)로 구분해서 넣는다.
+
+```python
+class 기반클래스이름1:
+    코드
+
+class 기반클래스이름2:
+    코드
+
+class 파생클래스이름(기반클래스이름1, 기반클래스이름2):
+    코드
+```
+
+이렇게 다중상속을 받을 경우 모든 기반 클래스의 기능을 상속받는다
+
+```python
+class Person: 
+    def greeting(self):
+        print('안녕하세요.')
+
+class University:
+    def manage_credit(self):
+        print('학점 관리')
+
+class Undergraduate(Person, University):
+    def study(self):
+        print('공부하기')
+
+james = Undergraduate()
+james.greeting()
+james.manage_credit()
+james.study()
+
+>>>
+안녕하세요.
+학점 관리
+공부하기
+```
+
+위 예시에서 Undergraduate 클래스는 Person과 University 클래스로부터 다중 상속을 받아 두 클래스의 기능을 모두 사용할 수 있다.
+
+### 프라이빗 변수와 __
+
+클래스에서 변수명을 `self.__변수명`과 같이 두개의 밑줄로 시작하게 설정하면, 해당변수는 클래스 외부에서 접근이 불가능한 **프라이빗 변수**로 관리된다. 다만 이는 절대적으로 숨겨지는 것이 아니라, 내부적으로 변수명을 변경하여 접근을 어렵게 만드는것이며, `dir()` 함수를 통해 확인하거나 접근할 수 있다. 
+
+하지만 일반적으로 이러한 접근은 권장되지 않으며, 프라이빗 변수는 외부에서 직접 접근하지 않도록 하는 것이 좋다.
+
+```python
+class Person:
+    def __init__(self):
+        self.__age = 20
+
+p = Person()
+print(dir(p)) # __age가 변경된 이름으로 확인됨
+
+>>> ['_Person__age', ...
+```
+
+실제로 self.__age가 _Person__age로 바뀌어 관리되며, 이 변수는 직접 접근은 어렵지만 이를 이용해 우회적으로 접근할 수 있다. 하지만 잘 사용되지는 않는다
+
+
+
