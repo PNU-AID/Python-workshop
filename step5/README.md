@@ -54,6 +54,7 @@ print(cal2.add(7))
 Calculator 클래스로 만든 별개의 계산기 cal1, cal2(파이썬에서는 이것을 ‘객체’라고 부른다)가 각각의 역할을 수행한다. 그리고 계산기의 결괏값 역시 다른 계산기의 결괏값과 상관없이 독립적인 값을 유지한다. 이렇게 클래스를 사용하면 계산기 대수가 늘어나도 객체를 생성하면 되므로 함수만 사용할 때보다 간단하게 프로그램을 작성할 수 있다
 
 # 생성자 (Constructor)
+
 일반적으로 함수는 사용자가 `함수이름()` 과 같은 형태로 호출해야 코드가 수행된다. 이와 달리 클래스 내에서 특별한 이름(`__init__`)을 갖기만 하면 객체가 생성될 때 자동으로 호출되는 함수가 있는 이를 생성자라고 한다.
 
 ```python
@@ -112,8 +113,71 @@ a = Car()
 여러분이 만든 클래스 타입에 대해 인덱싱 기능을 제공하려고 할때와 연산자를 수행할때 어떤 정해진 동작이 수행되도록 하려고 할 때에도 매직 메소드를 사용한다
 
 데이터셋 만들때 사용되는 대표적인 매직 메소드 
-- __len__(self): 컨테이너 내 항목의 수를 반환한다. len()함수에 의해 호출된다
-- __getitem__(self,key): 주어진 키에 해당하는 항목을 컨테이너에서 가져온다. ob[key]형식 (인덱싱)으로 접근 시 사용된다
+- `__len__(self)`: 이 메소드는 데이터셋 내의 항목 수를 반환한다. 예를 들어, 이미지 데이터셋의 경우 전체 이미지의 개수를 반환하는 데 사용된다. 이를 통해 len() 함수를 호출할 수 있다.
+
+```python
+class CustomDataset:
+    def __init__(self, data):
+        self.data = data  # 데이터 리스트
+
+    def __len__(self):
+        return len(self.data)  # 데이터 항목 수 반환
+
+# 데이터셋 예시
+dataset = CustomDataset([1, 2, 3, 4, 5])
+print("데이터셋의 크기:", len(dataset)) 
+
+>>> 5
+
+```
+
+- `__getitem__(self,key)`:이 메소드는 주어진 키(인덱스)를 사용하여 데이터셋에서 특정 항목을 가져오는 데 사용된다. 예를 들어, 이미지 데이터셋에서 특정 이미지를 가져올 때 유용하다.
+
+```python
+class CustomDataset:
+    def __init__(self, data):
+        self.data = data  # 데이터 리스트
+
+    def __getitem__(self, index):
+        return self.data[index]  # 주어진 인덱스에 해당하는 데이터 반환
+
+# 데이터셋 예시
+dataset = CustomDataset([10, 20, 30, 40, 50])
+print("0번째 항목:", dataset[0])  
+print("3번째 항목:", dataset[3]) 
+
+>>>
+0번째 항목: 10
+3번째 항목: 40
+```
+이 두 매직 메소드를 결합하여 간단한 이미지 데이터셋 클래스를 만들어 보겠다. 이 예시에서는 이미지의 경로와 라벨을 포함하는 데이터셋을 정의한다.
+
+```python
+class ImageDataset:
+    def __init__(self, images, labels):
+        self.images = images  # 이미지 파일 경로 리스트
+        self.labels = labels  # 라벨 리스트
+
+    def __len__(self):
+        return len(self.images)  # 이미지 수 반환
+
+    def __getitem__(self, index):
+        image = self.images[index]  # 해당 인덱스의 이미지 경로
+        label = self.labels[index]  # 해당 인덱스의 라벨
+        return image, label  # 이미지와 라벨 반환
+
+# 데이터셋 예시
+image_paths = ["img1.jpg", "img2.jpg", "img3.jpg"]
+labels = [0, 1, 0]  # 이진 분류 예시
+dataset = ImageDataset(image_paths, labels)
+
+print("데이터셋의 크기:", len(dataset))  
+print("0번째 이미지와 라벨:", dataset[0]) 
+
+>>>
+데이터셋의 크기: 3
+0번째 이미지와 라벨: ('img1.jpg', 0)
+```
 
 # 상속
 
@@ -165,8 +229,8 @@ print(james.hello)
 파이썬 코딩 도장
 AttributeError: 'Student' object has no attribute 'hello'
 ```
-기반 클래스 Person의 __init__ 메서드가 호출되지 않았기 때문이다.
-즉, Person의 __init__ 메서드가 호출되지 않으면 self.hello = '안녕하세요.'도 실행되지 않아서 속성이 만들어지지 않는다.
+기반 클래스 Person의 `__init__` 메서드가 호출되지 않았기 때문이다.
+즉, Person의 `__init__` 메서드가 호출되지 않으면 self.hello = '안녕하세요.'도 실행되지 않아서 속성이 만들어지지 않는다.
 
 이걸 해결할 수 있는게 super()이다
 
@@ -192,10 +256,10 @@ print(james.hello)
 안녕하세요.
 ```
 
-super().__init__()와 같이 기반 클래스 Person의 __init__ 메서드를 호출해주면 기반 클래스가 초기화되어서 속성이 만들어진다.
+`super().__init__()`와 같이 기반 클래스 Person의 `__init__` 메서드를 호출해주면 기반 클래스가 초기화되어서 속성이 만들어진다.
 
 ### 기반 클래스를 초기화하지 않아도 되는 경우
-만약 자식 클래스에서 __init__ 메소드를 정의하지 않으면, 부모 클래스의 __init__ 메소드가 자동으로 호출된다
+만약 자식 클래스에서 `__init__` 메소드를 정의하지 않으면, 부모 클래스의 `__init__` 메소드가 자동으로 호출된다
 
 ```python
 class Person:
