@@ -10,4 +10,4 @@ LLaVa(Large Language and Vision Assistant)는 이미지와 텍스트 정보를 �
 LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍부하고 유용한 정보를 생성할 수 있다는 점이다. 이는 특히 교육, 의료, 엔터테인먼트 등 다양한 분야에서 응용 가능성이 높다.
 
 
-![유튜브링크](https://www.youtube.com/watch?v=4Jpltb9crPM)
+[유튜브링크](https://www.youtube.com/watch?v=4Jpltb9crPM)
