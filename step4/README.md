@@ -209,4 +209,4 @@ def render_test():
     echo_test()
 ```
 
-이 경우 ..는 현재 디렉터리(graphic)의 부모 디렉터리인 game을 의미한다.
+이 경우 `..`는 현재 디렉터리(graphic)의 부모 디렉터리인 game을 의미한다.
