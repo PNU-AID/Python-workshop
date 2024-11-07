@@ -13,7 +13,7 @@ LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍�
 [유튜브링크](https://www.youtube.com/watch?v=4Jpltb9crPM)
 
 1. **LLaVa 설치 준비**
-   - LLaVa는 이미지를 분석하고 설명을 생성하는 모델입니다. 이를 로컬 환경에서 실행하려면 먼저 `olama`라는 도구를 설치해야 합니다.
+   - LLaVa는 이미지를 분석하고 설명을 생성하는 모델입니다. 이를 로컬 환경에서 실행하려면 먼저 `ollama`라는 도구를 설치해야 합니다.
    - **설치 명령어**:
      - macOS/Linux/Windows에 맞게 [ollama 다운로드 페이지](https://ollama.com)에서 설치 파일을 받을 수 있습니다.
      - Linux에서는 아래 명령어로 설치 가능합니다.
@@ -31,7 +31,7 @@ LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍�
    - 모델 크기는 시스템 성능에 따라 7B 또는 13B 중에서 선택하는 것이 좋습니다. 34B 모델은 상당한 GPU 메모리를 요구하므로 일반 PC에서는 사용하기 어려울 수 있습니다.
 
 3. **Python에서 ollama 패키지 설치**
-   - Python에서 LLaVa 모델을 사용할 수 있도록 `olama` 패키지를 설치해야 합니다.
+   - Python에서 LLaVa 모델을 사용할 수 있도록 `ollama` 패키지를 설치해야 합니다.
    - **설치 명령어**:
      ```bash
      pip3 install ollama
