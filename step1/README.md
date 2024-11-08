@@ -25,6 +25,7 @@
    brew upgrade pyenv
    ```
 2. **Windows에서 pyenv**: `pyenv-win` 설치
+   (PowerShell을 열고)
    ```powershell
    pip install pyenv-win --target $HOME\.pyenv
    pyenv --version
