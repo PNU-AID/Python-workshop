@@ -50,7 +50,7 @@ LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍�
          model="llava:7b",  # 사용할 모델 이름
          messages=[{
              'role': 'user',
-             'content': '이 이미지를 설명해 주세요',
+             'content': 'Describe this image',
              'images': ['./image1.jpeg']  # 이미지 경로
          }]
      )
@@ -68,7 +68,7 @@ LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍�
          model="llava:7b",
          messages=[{
              'role': 'user',
-             'content': '이 이미지에서 개는 몇 마리 있나요?',
+             'content': 'How many dogs are in this picture?',
              'images': ['./image4.jpeg']
          }]
      )
@@ -83,7 +83,7 @@ LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍�
          model="llava:7b",
          messages=[{
              'role': 'user',
-             'content': '이 이미지에 대한 5개의 키워드를 제공해주세요',
+             'content': 'Give me 5 keywords about this image.',
              'images': ['./image2.jpeg']
          }]
      )
@@ -98,7 +98,7 @@ LLaVa의 주요 장점은 언어와 비전 데이터를 결합하여 보다 풍�
          model="llava:7b",
          messages=[{
              'role': 'user',
-             'content': '이 이미지에서 보이는 프로그래밍 언어는 무엇인가요?',
+             'content': 'What is this programming language is displayed on the laptop?',
              'images': ['./image2.jpeg']
          }]
      )
